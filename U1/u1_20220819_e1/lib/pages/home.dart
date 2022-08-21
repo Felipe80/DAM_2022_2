@@ -8,7 +8,7 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         leading: Icon(Icons.bug_report),
-        title: Text('Texto del appbar'),
+        title: Text('Primer Ejemplo DAM'),
       ),
       body: Center(
         child: Text('Hola Mundo'),
