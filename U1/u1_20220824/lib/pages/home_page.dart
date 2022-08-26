@@ -3,7 +3,8 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 
 class HomePage extends StatelessWidget {
 
-  TextStyle estilo1 = TextStyle(color: Colors.blue,fontSize: 20,fontWeight: FontWeight.bold);
+  final estilo1 = TextStyle(color: Colors.blue,fontSize: 20,fontWeight: FontWeight.bold);
+  final estilo2 = TextStyle(fontSize: 24);
 
   @override
   Widget build(BuildContext context) {
@@ -40,6 +41,20 @@ class HomePage extends StatelessWidget {
                 Icon(Icons.rocket,size:50),
                 Icon(MdiIcons.alienOutline,size: 50,)
               ],
+            ),
+            Container(
+              color: Colors.lightBlue.shade100,
+              height: 100,
+              child: Row(
+                // mainAxisAlignment: MainAxisAlignment.spaceAround,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                Text('Uno',style:estilo2),
+                Text('Dos',style:estilo2),
+                Spacer(),
+                Text('Tres',style:estilo2),
+                Text('Cuatro',style:estilo2),
+              ],),
             ),
           ],
         ),
