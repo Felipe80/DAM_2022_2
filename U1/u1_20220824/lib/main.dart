@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:u1_20220824/pages/ejemplo_boton_page.dart';
 import 'package:u1_20220824/pages/home_page.dart';
+import 'package:u1_20220824/pages/juegos_page.dart';
+import 'package:u1_20220824/pages/listas_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -27,7 +29,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: EjemploBotonPage(),
+      home: JuegosPage(),
     );
   }
 }
