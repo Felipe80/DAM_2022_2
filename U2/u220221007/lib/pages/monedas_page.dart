@@ -20,7 +20,7 @@ class MonedasPage extends StatelessWidget {
           }
 
           var datos = snapshot.data;
-          print(datos);
+          //print(datos);
 
           return ListView.builder(
             itemCount: datos.length,

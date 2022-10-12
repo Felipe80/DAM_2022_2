@@ -10,6 +10,8 @@ class MonedasProvider {
 
     //await Future.delayed(Duration(seconds: 3));
 
+    print('Status Code:' + respuesta.statusCode.toString());
+
     if (respuesta.statusCode == 200) {
       //respuesta ok
       return json.decode(respuesta.body);
