@@ -59,7 +59,12 @@ class ProductosController extends Controller
      */
     public function update(Request $request, Producto $producto)
     {
-        //
+        $producto->cod_producto = $request->cod_producto;
+        $producto->nombre = $request->nombre;
+        $producto->precio = $request->precio;
+        $producto->stock = $request->stock;
+        $producto->save();
+        return $producto;
     }
 
     /**
@@ -70,6 +75,8 @@ class ProductosController extends Controller
      */
     public function destroy(Producto $producto)
     {
-        //
+        $producto->delete();
     }
+
+
 }
