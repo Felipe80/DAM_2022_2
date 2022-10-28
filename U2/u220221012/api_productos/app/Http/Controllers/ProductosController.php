@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Producto;
 use Illuminate\Http\Request;
+use App\Http\Requests\ProductosRequest;
 
 class ProductosController extends Controller
 {
@@ -25,7 +26,7 @@ class ProductosController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ProductosRequest $request)
     {
         //dd($request->cod_producto);
         // echo $request->cod_producto;

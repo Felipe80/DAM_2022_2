@@ -12,6 +12,11 @@ class _ProductosAgregarPageState extends State<ProductosAgregarPage> {
   TextEditingController precioCtrl = TextEditingController();
   TextEditingController stockCtrl = TextEditingController();
 
+  String errCodigo = '';
+  String errNombre = '';
+  String errPrecio = '';
+  String errStock = '';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,13 +29,27 @@ class _ProductosAgregarPageState extends State<ProductosAgregarPage> {
           child: ListView(
             children: [
               campoCodigo(),
+              mostrarError(errCodigo),
               campoNombre(),
+              mostrarError(errNombre),
               campoPrecio(),
+              mostrarError(errPrecio),
               campoStock(),
+              mostrarError(errStock),
               botonAgregar(),
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Container mostrarError(String error) {
+    return Container(
+      width: double.infinity,
+      child: Text(
+        error,
+        style: TextStyle(color: Colors.red),
       ),
     );
   }
@@ -96,8 +115,21 @@ class _ProductosAgregarPageState extends State<ProductosAgregarPage> {
           int stock = int.tryParse(stockCtrl.text.trim()) ?? 0;
 
           //enviar por post al api
-          await ProductosProvider()
+          var respuesta = await ProductosProvider()
               .agregar(cod_producto, nombre, precio, stock);
+
+          //manejar errores
+          if (respuesta['message'] != null) {
+            var errores = respuesta['errors'];
+            errCodigo = errores['cod_producto'] != null
+                ? errores['cod_producto'][0]
+                : '';
+            errNombre = errores['nombre'] != null ? errores['nombre'][0] : '';
+            errPrecio = errores['precio'] != null ? errores['precio'][0] : '';
+            errStock = errores['stock'] != null ? errores['stock'][0] : '';
+            setState(() {});
+            return;
+          }
 
           //redireccionar a pagina que lista productos
           Navigator.pop(context);
