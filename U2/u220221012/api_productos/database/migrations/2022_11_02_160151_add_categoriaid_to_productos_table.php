@@ -13,14 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('productos', function (Blueprint $table) {
-            $table->string('cod_producto',20)->primary();
-            $table->string('nombre',50);
-            $table->integer('precio');
-            $table->integer('stock');
-            $table->softDeletes();
-            // $table->id();
-            // $table->timestamps();
+        Schema::table('productos', function (Blueprint $table) {
+            $table->unsignedInteger('categoria_id');
+            $table->foreign('categoria_id')->references('id')->on('categorias');
         });
     }
 
@@ -31,6 +26,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('productos');
+        Schema::table('productos', function (Blueprint $table) {
+            //
+        });
     }
 };

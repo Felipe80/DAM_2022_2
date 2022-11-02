@@ -17,7 +17,7 @@ class ProductosController extends Controller
     {
         // dd('Productos index');
         // $productos = Producto::all();
-        return Producto::all();
+        return Producto::all()->load('categoria');
     }
 
     /**

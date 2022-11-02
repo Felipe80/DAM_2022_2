@@ -13,14 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('productos', function (Blueprint $table) {
-            $table->string('cod_producto',20)->primary();
-            $table->string('nombre',50);
-            $table->integer('precio');
-            $table->integer('stock');
+        Schema::create('categorias', function (Blueprint $table) {
+            $table->unsignedInteger('id')->autoIncrement();
+            $table->string('nombre',20);
+            $table->timestamps();
             $table->softDeletes();
-            // $table->id();
-            // $table->timestamps();
         });
     }
 
@@ -31,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('productos');
+        Schema::dropIfExists('categorias');
     }
 };

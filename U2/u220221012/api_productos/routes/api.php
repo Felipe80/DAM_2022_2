@@ -2,7 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ProductosController;
+use App\Http\Controllers\{ProductosController,CategoriasController};
 
 /*
 |--------------------------------------------------------------------------
@@ -26,3 +26,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 // Route::delete('/productos/{producto}',[ProductosController::class,'destroy']);
 
 Route::apiResource('/productos',ProductosController::class);
+Route::apiResource('/categorias',CategoriasController::class);
