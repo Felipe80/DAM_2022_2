@@ -28,6 +28,7 @@ class ProductosRequest extends FormRequest
             'nombre' => 'required',
             'precio' => 'required|numeric|gte:0',
             'stock' => 'required|numeric|gt:0',
+            'categoria' => 'gte:1',
         ];
     }
 
@@ -43,6 +44,7 @@ class ProductosRequest extends FormRequest
             'stock.required' => 'Indique el stock de producto',
             'stock.numeric' => 'Stock debe ser un número',
             'stock.gt' => 'El stock debe ser mayor a cero',
+            'categoria.gte' => 'Categoría no válida',
         ];
     }
 }

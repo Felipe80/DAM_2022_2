@@ -39,6 +39,9 @@ class _ProductosListarPageState extends State<ProductosListarPage> {
             itemCount: snapshot.data.length,
             itemBuilder: (context, index) {
               var producto = snapshot.data[index];
+              String nombreCategoria = producto['categoria'] == null
+                  ? 'Sin Categoría'
+                  : producto['categoria']['nombre'];
               return Slidable(
                 //action panes
                 startActionPane: ActionPane(
@@ -89,9 +92,9 @@ class _ProductosListarPageState extends State<ProductosListarPage> {
                 //ListTile
                 child: ListTile(
                   leading: Icon(MdiIcons.cube),
-                  title: Text(
-                      '(${producto['categoria']['nombre']}) ${producto['nombre']}'),
-                  subtitle: Text(
+                  title: Text('(${nombreCategoria}) ${producto['nombre']}'),
+                  subtitle: Text('Stock: ${producto['stock']}'),
+                  trailing: Text(
                     '\$' + fPrecio.format(producto['precio']),
                   ),
                   onLongPress: () {

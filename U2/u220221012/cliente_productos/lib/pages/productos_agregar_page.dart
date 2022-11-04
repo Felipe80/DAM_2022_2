@@ -17,6 +17,8 @@ class _ProductosAgregarPageState extends State<ProductosAgregarPage> {
   String errPrecio = '';
   String errStock = '';
 
+  int categoriaSeleccionada = 0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,10 +38,44 @@ class _ProductosAgregarPageState extends State<ProductosAgregarPage> {
               mostrarError(errPrecio),
               campoStock(),
               mostrarError(errStock),
+              campoCategoria(),
               botonAgregar(),
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Container campoCategoria() {
+    return Container(
+      child: FutureBuilder(
+        future: ProductosProvider().getCategorias(),
+        builder: (context, AsyncSnapshot snap) {
+          if (!snap.hasData) {
+            return DropdownButtonFormField<String>(
+              hint: Text('Cargando categorías...'),
+              items: [],
+              onChanged: (value) {},
+            );
+          }
+
+          var categorias = snap.data;
+
+          return DropdownButtonFormField<int>(
+            hint: Text('Categorías'),
+            items: categorias.map<DropdownMenuItem<int>>((categoria) {
+              return DropdownMenuItem<int>(
+                child: Text(categoria['nombre']),
+                value: categoria['id'],
+              );
+            }).toList(),
+            onChanged: (categoria) {
+              // print('Categoria: $categoria');
+              categoriaSeleccionada = categoria!;
+            },
+          );
+        },
       ),
     );
   }
@@ -115,8 +151,8 @@ class _ProductosAgregarPageState extends State<ProductosAgregarPage> {
           int stock = int.tryParse(stockCtrl.text.trim()) ?? 0;
 
           //enviar por post al api
-          var respuesta = await ProductosProvider()
-              .agregar(cod_producto, nombre, precio, stock);
+          var respuesta = await ProductosProvider().agregar(
+              cod_producto, nombre, precio, stock, categoriaSeleccionada);
 
           //manejar errores
           if (respuesta['message'] != null) {

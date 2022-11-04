@@ -6,6 +6,16 @@ import 'package:http/http.dart' as http;
 class ProductosProvider {
   final apiURL = 'http://10.0.2.2:8000/api';
 
+  Future<List<dynamic>> getCategorias() async {
+    var respuesta = await http.get(Uri.parse(apiURL + '/categorias'));
+
+    if (respuesta.statusCode == 200) {
+      return json.decode(respuesta.body);
+    } else {
+      return [];
+    }
+  }
+
   Future<List<dynamic>> getProductos() async {
     var respuesta = await http.get(Uri.parse(apiURL + '/productos'));
 
@@ -16,8 +26,8 @@ class ProductosProvider {
     }
   }
 
-  Future<LinkedHashMap<String, dynamic>> agregar(
-      String cod_producto, String nombre, int precio, int stock) async {
+  Future<LinkedHashMap<String, dynamic>> agregar(String cod_producto,
+      String nombre, int precio, int stock, int categoria) async {
     var respuesta = await http.post(
       Uri.parse(apiURL + '/productos'),
       headers: <String, String>{
@@ -29,6 +39,7 @@ class ProductosProvider {
         'nombre': nombre,
         'precio': precio,
         'stock': stock,
+        'categoria': categoria,
       }),
     );
 
