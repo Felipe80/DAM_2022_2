@@ -14,7 +14,7 @@ class ProductosController extends Controller
      */
     public function index()
     {
-        //
+        return Producto::orderBy('nombre')->get(['cod_producto','nombre','precio']);
     }
 
     /**
@@ -36,7 +36,7 @@ class ProductosController extends Controller
      */
     public function show(Producto $producto)
     {
-        //
+        return $producto->makeVisible(['ventas']);
     }
 
     /**

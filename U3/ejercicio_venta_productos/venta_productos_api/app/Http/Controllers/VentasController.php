@@ -14,7 +14,7 @@ class VentasController extends Controller
      */
     public function index()
     {
-        //
+        return Venta::all();
     }
 
     /**
@@ -36,7 +36,7 @@ class VentasController extends Controller
      */
     public function show(Venta $venta)
     {
-        //
+        return $venta->makeVisible(['productosConPivot']);
     }
 
     /**

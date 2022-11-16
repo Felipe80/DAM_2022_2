@@ -14,6 +14,7 @@ class Venta extends Model
     protected $keyType = 'integer';
     public $timestamps = false;
     protected $appends = ['total_venta'];
+    protected $hidden = ['productosConPivot'];
 
     //retorna los productos de la venta
     public function productos(){

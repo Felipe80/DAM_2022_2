@@ -15,6 +15,7 @@ class Producto extends Model
     protected $keyType = 'string';
     public $timestamps = false;
     protected $appends = ['cantidad_ventas','unidades_vendidas'];
+    protected $hidden = ['ventas','ventasConPivot'];
 
     //retornar las ventas en que está un producto
     public function ventas(){
