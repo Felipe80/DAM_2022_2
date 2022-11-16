@@ -14,4 +14,10 @@ class Producto extends Model
     protected $primaryKey = 'cod_producto';
     protected $keyType = 'string';
     public $timestamps = false;
+
+    //retornar las ventas en que está un producto
+    public function ventas(){
+        //modelo al que apunta,nombre tabla pivote
+        return $this->belongsToMany(Venta::class,'producto_venta','cod_producto','venta_id');
+    }
 }

@@ -13,4 +13,9 @@ class Venta extends Model
     protected $table = 'ventas';
     protected $keyType = 'integer';
     public $timestamps = false;
+
+    //retorna los productos de la venta
+    public function productos(){
+        return $this->belongsToMany(Producto::class,'producto_venta','venta_id','cod_producto');
+    }
 }
