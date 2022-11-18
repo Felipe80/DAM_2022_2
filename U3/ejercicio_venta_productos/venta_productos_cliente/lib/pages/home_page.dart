@@ -20,11 +20,36 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       //APPBAR
       appBar: AppBar(
-        title: Text('Venta de Productos'),
+        elevation: 0,
+        backgroundColor: Color(kPrimaryColor),
+        title: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Desarrollo de Aplicaciones Móviles',
+              style: kSubTituloAppbar,
+            ),
+            Text(
+              'Venta de Productos',
+              style: kTituloAppbar,
+            ),
+          ],
+        ),
       ),
 
       //BODY
-      body: paginas[paginaSel],
+      body: Container(
+        color: Color(kBackgroundColor),
+        padding: EdgeInsets.all(15),
+        child: paginas[paginaSel],
+      ),
+
+      //BOTON AGREGAR
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        onPressed: () {},
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
 
       //BOTTOMNAV
       bottomNavigationBar: BottomNavigationBar(

@@ -61,4 +61,10 @@ class ProductosController extends Controller
     {
         //
     }
+
+    public function buscar(Request $request){
+        return Producto::where('nombre','LIKE','%'.$request->buscar.'%')
+                            ->orWhere('cod_producto','LIKE','%'.$request->buscar.'%')
+                            ->get();
+    }
 }
