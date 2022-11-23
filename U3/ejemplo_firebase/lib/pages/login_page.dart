@@ -1,4 +1,7 @@
+import 'package:ejemplo_firebase/pages/home_page.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key? key}) : super(key: key);
@@ -11,6 +14,7 @@ class _LoginPageState extends State<LoginPage> {
   final formKey = GlobalKey<FormState>();
   TextEditingController emailCtrl = TextEditingController();
   TextEditingController passwordCtrl = TextEditingController();
+  String error = '';
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +63,7 @@ class _LoginPageState extends State<LoginPage> {
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(backgroundColor: Colors.green),
                       child: Text('INICIAR SESIÓN'),
-                      onPressed: () {},
+                      onPressed: () => login(),
                     ),
                   ),
 
@@ -69,7 +73,7 @@ class _LoginPageState extends State<LoginPage> {
                     alignment: Alignment.center,
                     width: double.infinity,
                     child: Text(
-                      'Error',
+                      error,
                       style: TextStyle(color: Colors.red),
                     ),
                   ),
@@ -81,5 +85,43 @@ class _LoginPageState extends State<LoginPage> {
         ),
       ),
     );
+  }
+
+  void login() async {
+    try {
+      //intentar hacer login
+      UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: emailCtrl.text.trim(),
+        password: passwordCtrl.text.trim(),
+      );
+
+      //si llego acá las credenciales estaban ok
+      //guardar user email
+      SharedPreferences sp = await SharedPreferences.getInstance();
+      sp.setString('userEmail', userCredential.user!.email.toString());
+
+      //redirigir al home
+      MaterialPageRoute route = MaterialPageRoute(
+        builder: (context) => HomePage(),
+      );
+      Navigator.pushReplacement(context, route);
+    } on FirebaseAuthException catch (ex) {
+      //si el login no es válido llegamos acá
+      switch (ex.code) {
+        case 'user-not-found':
+          error = 'Usuario no existe';
+          break;
+        case 'wrong-password':
+          error = 'Contraseña incorrecta';
+          break;
+        case 'user-disabled':
+          error = 'Cuenta desactivada';
+          break;
+        default:
+          error = ex.message.toString();
+          break;
+      }
+      setState(() {});
+    }
   }
 }
