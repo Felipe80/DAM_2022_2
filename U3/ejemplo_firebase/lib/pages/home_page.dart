@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ejemplo_firebase/pages/login_page.dart';
+import 'package:ejemplo_firebase/services/firestore_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
@@ -53,6 +55,33 @@ class HomePage extends StatelessWidget {
             },
           ),
         ],
+      ),
+      body: StreamBuilder(
+        stream: FirestoreService().productos(),
+        builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          if (!snapshot.hasData || snapshot.connectionState == ConnectionState.waiting) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+
+          return ListView.separated(
+            separatorBuilder: (context, index) => Divider(),
+            itemCount: snapshot.data!.docs.length,
+            itemBuilder: (context, index) {
+              var producto = snapshot.data!.docs[index];
+              //print('PRODUCTO:' + producto.data().toString());
+              return ListTile(
+                leading: Icon(
+                  MdiIcons.cube,
+                  color: Colors.deepPurple,
+                ),
+                title: Text(producto['nombre']),
+                subtitle: Text('Stock:${producto['stock'].toString()}'),
+              );
+            },
+          );
+        },
       ),
     );
   }
