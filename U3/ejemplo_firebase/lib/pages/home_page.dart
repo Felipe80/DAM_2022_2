@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ejemplo_firebase/pages/login_page.dart';
+import 'package:ejemplo_firebase/pages/productos_agregar_page.dart';
 import 'package:ejemplo_firebase/services/firestore_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -78,9 +79,22 @@ class HomePage extends StatelessWidget {
                 ),
                 title: Text(producto['nombre']),
                 subtitle: Text('Stock:${producto['stock'].toString()}'),
+                trailing: OutlinedButton(
+                  child: Text('Borrar'),
+                  onPressed: () {
+                    FirestoreService().borrar(producto.id);
+                  },
+                ),
               );
             },
           );
+        },
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        onPressed: () {
+          MaterialPageRoute route = MaterialPageRoute(builder: ((context) => ProductosAgregarPage()));
+          Navigator.push(context, route);
         },
       ),
     );
